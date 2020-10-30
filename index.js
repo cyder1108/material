@@ -6,20 +6,23 @@ class Material {
   constructor( type = "div", ...args ) {
     this[isMaterial] = true;
     this.el = document.createElement( type );
+    this.content( ...args )
+  }
+
+  render() {
+    return this;
+  }
+
+  content( ...args ) {
+    this.el.innerHTML = "";
     for( var i = 0; i < args.length; i++ ) {
       var arg = args[i];
-      console.log( typeof arg)
-      console.log( arg[isMaterial])
       if( typeof arg === "object" && arg[isMaterial] === void(0) ) {
         this.setAttributes( arg );
       } else {
         this.append( arg );
       }
     }
-  }
-
-  render() {
-    return this;
   }
 
   append( content ) {
@@ -30,14 +33,12 @@ class Material {
       if( content instanceof Element ) {
         this.el.insertAdjacentElement("beforeend", content );
       } else {
-        console.log( content );
         this.el.appendChild( document.createTextNode( content ) );
       }
     }
   }
 
   setAttributes( attributes ) {
-    console.log( attributes );
     const keys = Object.keys( attributes );
     for( var i = 0; i < keys.length; i++ ) {
       var key = keys[i];
