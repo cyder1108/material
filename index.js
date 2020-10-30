@@ -18,8 +18,13 @@ class Material {
     }
   }
 
+  render() {
+    return this;
+  }
+
   append( content ) {
     if( content[isMaterial] ) {
+      content.render();
       this.el.insertAdjacentElement("beforeend", content.el );
     } else {
       if( content instanceof Element ) {
