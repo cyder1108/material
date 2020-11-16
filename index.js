@@ -1,7 +1,5 @@
 "use strict";
 
-const isMaterial = Symbol();
-
 class Material {
   constructor( type = "div", ...args ) {
     this.isMaterial = true;
