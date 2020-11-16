@@ -4,7 +4,7 @@ const isMaterial = Symbol();
 
 class Material {
   constructor( type = "div", ...args ) {
-    this[isMaterial] = true;
+    this.isMaterial = true;
     this.el = document.createElement( type );
     this.content( ...args )
   }
@@ -17,7 +17,7 @@ class Material {
     this.el.innerHTML = "";
     for( var i = 0; i < args.length; i++ ) {
       var arg = args[i];
-      if( typeof arg === "object" && arg[isMaterial] === void(0) ) {
+      if( typeof arg === "object" && arg.isMaterial === void(0) ) {
         this.setAttributes( arg );
       } else {
         this.append( arg );
@@ -26,7 +26,7 @@ class Material {
   }
 
   append( content ) {
-    if( content[isMaterial] ) {
+    if( content.isMaterial ) {
       content.render();
       this.el.insertAdjacentElement("beforeend", content.el );
     } else {
