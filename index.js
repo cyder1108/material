@@ -16,6 +16,7 @@ class Material {
     for( var i = 0; i < args.length; i++ ) {
       var arg = args[i];
       if( arg === null ) continue;
+      if( arg === void 0 ) continue;
       if( typeof arg === "object" && arg.isMaterial === void(0) ) {
         this.setAttributes( arg );
       } else {
