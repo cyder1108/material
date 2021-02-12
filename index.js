@@ -3,6 +3,7 @@
 class Material {
   constructor( type = "div", ...args ) {
     this.isMaterial = true;
+    this.componentEvents = {}
     this.el = document.createElement( type );
     this.content( ...args )
   }
