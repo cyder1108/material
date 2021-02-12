@@ -52,6 +52,23 @@ class Material {
     this.el.addEventListener(eventName, callback);
     return this;
   }
+
+  componentOn( name, fn ) {
+    if( this.componentEvents[name] === void 0 ) {
+      this.componentEvents[name] = []
+    }
+    this.componentEvents[name].push( fn )
+  }
+
+  componentEmit( name, ...args ) {
+    if( this.componentEvents[name] === void 0 ) return;
+    const events = this.componentEvents[name];
+    for( var i = 0; i < events.length; i++ ) {
+      const event = events[i]
+      event( ...args )
+    }
+  }
+
 }
 const s = {
   tag: ( tagName, ...args ) => {
@@ -90,6 +107,10 @@ const s = {
   img: ( ...args ) => {
     args.unshift({ alt: "image" });
     return new Material("img", ...args);
+  },
+
+  label: ( ...args ) => {
+    return new Material("label", ...args);
   },
 
   input: ( ...args ) => {
