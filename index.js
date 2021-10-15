@@ -118,6 +118,15 @@ const s = {
     args.unshift({ type: "text" })
     return new Material("input", ...args);
   },
+  textarea: ( ...args ) => {
+    return new Material("input", ...args);
+  },
+  select: ( ...args ) => {
+    return new Material("select", ...args);
+  },
+  option: ( ...args ) => {
+    return new Material("option", ...args);
+  },
 }
 
 
