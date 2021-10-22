@@ -127,6 +127,27 @@ const s = {
   option: ( ...args ) => {
     return new Material("option", ...args);
   },
+  table: ( ...args ) => {
+    return new Material("table", ...args);
+  },
+  thead: ( ...args ) => {
+    return new Material("thead", ...args);
+  },
+  tbody: ( ...args ) => {
+    return new Material("tbody", ...args);
+  },
+  tfoot: ( ...args ) => {
+    return new Material("tfoot", ...args);
+  },
+  tr: ( ...args ) => {
+    return new Material("tr", ...args);
+  },
+  th: ( ...args ) => {
+    return new Material("th", ...args);
+  },
+  td: ( ...args ) => {
+    return new Material("td", ...args);
+  },
 }
 
 
