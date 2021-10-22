@@ -5,11 +5,12 @@ class Material {
     this.isMaterial = true;
     this.componentEvents = {}
     this.el = document.createElement( type );
-    this.content( ...args )
+    this.instanceArguments = args;
+    this.props = [];
   }
 
   render() {
-    return this;
+    return this.content( ...this.instanceArguments )
   }
 
   content( ...args ) {
@@ -24,6 +25,7 @@ class Material {
         this.append( arg );
       }
     }
+    return this;
   }
 
   append( content ) {
@@ -46,6 +48,11 @@ class Material {
       var val = attributes[key];
       this.el.setAttribute( key, val );
     }
+    return this;
+  }
+
+  setProps( props = {} ) {
+    Object.assign( this.props, props );
     return this;
   }
 
