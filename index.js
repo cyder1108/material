@@ -7,6 +7,7 @@ class Material {
     this.el = document.createElement( type );
     this.instanceArguments = args;
     this.props = [];
+    this.classes = [];
   }
 
   render() {
@@ -46,7 +47,25 @@ class Material {
     for( var i = 0; i < keys.length; i++ ) {
       var key = keys[i];
       var val = attributes[key];
+
+      if( key === "class" ) {
+        if( typeof val === "string" ) {
+          var _classes = val.split(" ");
+        }else if( val instanceof Array ) {
+          var _classes = val;
+        }
+        this.classes = this.classes.concat( val );
+        continue;
+      }
+
+      if( key === "style" && typeof val === "object" ) {
+        val = this.obj2css( val );
+      }
+
       this.el.setAttribute( key, val );
+    }
+    if( this.classes.length > 0 ) {
+      this.el.setAttribute( "class", this.classes.join(" ") );
     }
     return this;
   }
@@ -75,6 +94,22 @@ class Material {
       const event = events[i]
       event( ...args )
     }
+  }
+
+  obj2css( obj ) {
+    var css = "";
+    var propNames = Object.keys( obj );
+    for( var i = 0; i < propNames.length; i++ ) {
+      const propName = this.camel2kebab( propNames[i] );
+      const propVal = obj[propNames[i]];
+      css += `${propName}:${propVal};`
+
+    }
+    return css;
+  }
+
+  camel2kebab( str ) {
+    return str.replace(/[A-Z]/g, s => `-${s.toLowerCase()}`)
   }
 
 }
