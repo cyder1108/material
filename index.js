@@ -8,6 +8,7 @@ class Material {
     this.instanceArguments = args;
     this.props = [];
     this.classes = [];
+    this.didRender = false;
   }
 
   render() {
@@ -26,12 +27,15 @@ class Material {
         this.append( arg );
       }
     }
+    this.didRender = true;
     return this;
   }
 
   append( content ) {
     if( content.isMaterial ) {
-      content.render();
+      if( !content.didRender ) {
+        content.render();
+      }
       this.el.insertAdjacentElement("beforeend", content.el );
     } else {
       if( content instanceof Element ) {
