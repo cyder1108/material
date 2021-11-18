@@ -44,6 +44,7 @@ class Material {
         this.el.appendChild( document.createTextNode( content ) );
       }
     }
+    return this;
   }
 
   setAttributes( attributes ) {
@@ -89,6 +90,26 @@ class Material {
       this.componentEvents[name] = []
     }
     this.componentEvents[name].push( fn )
+    return this;
+  }
+
+  addClass( className ) {
+    this.el.classList.add( className );
+    return this;
+  }
+
+  removeClass( className ) {
+    this.el.classList.remove( className );
+    return this;
+  }
+
+  toggleClass( className ) {
+    this.el.classList.toggle( className );
+    return this;
+  }
+
+  hasClass( className ) {
+    return this.el.classList.contains( className );
   }
 
   componentEmit( name, ...args ) {
@@ -98,6 +119,7 @@ class Material {
       const event = events[i]
       event( ...args )
     }
+    return this;
   }
 
   obj2css( obj ) {
