@@ -4,6 +4,7 @@ class Material {
   constructor( type = "div", ...args ) {
     this.isMaterial = true;
     this.componentEvents = {}
+    this.tagName = type;
     this.el = document.createElement( type );
     this.instanceArguments = args;
     this.props = [];
@@ -41,7 +42,11 @@ class Material {
       if( content instanceof Element ) {
         this.el.insertAdjacentElement("beforeend", content );
       } else {
-        this.el.appendChild( document.createTextNode( content ) );
+        if( this.tagName === "textarea" ) {
+          this.el.insertAdjacentText("beforeend", content );
+        } else {
+          this.el.appendChild( document.createTextNode( content ) );
+        }
       }
     }
     return this;
@@ -187,7 +192,7 @@ const s = {
     return new Material("input", ...args);
   },
   textarea: ( ...args ) => {
-    return new Material("input", ...args);
+    return new Material("textarea", ...args);
   },
   select: ( ...args ) => {
     return new Material("select", ...args);
