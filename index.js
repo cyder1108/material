@@ -145,6 +145,15 @@ class Material {
 
 }
 const s = {
+  raw: ( html ) => {
+    const wrapper = document.createElement("div");
+    wrapper.insertAdjacentHTML("beforeend", html);
+    if( wrapper.childNodes.length > 1 ) {
+      throw new Error("raw関数を使用する場合直下のHTMLタグは一つである必要があります。");
+    }
+    return wrapper.childNodes[0];
+  },
+
   tag: ( tagName, ...args ) => {
     return new Material( tagName, ...args );
   },
