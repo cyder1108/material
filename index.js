@@ -86,8 +86,41 @@ class Material {
   }
 
   on( eventName, callback ) {
-    this.el.addEventListener(eventName, callback);
+    if( eventName === "touchOrClick" ) {
+      if( this.isTouchDevice() ) {
+        this.el.addEventListener(`touchstart`, e => {
+          this._touchStart = e.touches
+          this._touchCanceled = false;
+        });
+        this.el.addEventListener(`touchmove`, e => {
+          if( this._touchCanceled ) return;
+          if( this._touchStart.length > 1 )
+            return this._touchCanceled = true;
+          const start = this._touchStart[0];
+          const current = e.touches[0];
+          const diff = Math.sqrt(
+            Math.pow( start.clientX - current.clientX, 2 ) +
+            Math.pow( start.clientY - current.clientY, 2 )
+          );
+          if( diff > 20 ) return this._touchCanceled = true;
+        });
+        this.el.addEventListener(`touchend`, e => {
+          if( this._touchCanceled ) return;
+          callback(e)
+        });
+      } else {
+        this.el.addEventListener(`click`, callback);
+      }
+
+    } else {
+      this.el.addEventListener(eventName, callback);
+    }
     return this;
+  }
+
+  isTouchDevice() {
+    const ua = window.navigator.userAgent;
+    return /(ipad|iphone|android|mobile)/.test( ua.toLowerCase() );
   }
 
   componentOn( name, fn ) {
